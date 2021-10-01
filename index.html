@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Weather Dashboard</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- import fonts (google fonts) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Merriweather&family=Rubik&display=swap" rel="stylesheet">
+    <!-- import bootstrap -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+    <!-- import STYLES css file -->
+    <link rel="stylesheet" type="text/css" href="./css/styles.css" />
+  </head>
+  <body>
+
+    <header class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <h1>Weather Dashboard</h1>
+        </div>
+      </div>
+    </header>
+    
+    <div class="container">
+      <div class="row">
+        <aside class="col-12 col-sm-12 col-md-3">
+          <form class="form-group" id="search">
+            <div>
+              <label for="inputCity"><h3>Search for a City:</h3></label>
+              <input type="text" class="form-control" id="inputCity" aria-describedby="cityHelp" placeholder="San Diego">
+            </div>
+            <button type="submit" id="searchCity" class="btn btn-primary btn-block">Search</button>
+          </form>
+        </aside>
+        <div class="col-12 col-sm-12 col-md-9">
+          <div class="row">
+            <article class="col-12 day">
+              <h3 id="city"></h3>
+              <p>Temp: <span class="temp"></span></p>
+              <p>Wind: <span class="wind"></span></p>
+              <p>Humidity: <span class="humidity"></span></p>
+              <p>UV Index: <span class="uvi"></span></p>
+            </article>
+          </div>
+          <div class="row" id="fiveDayForecast">
+            <!-- <div class="col-12">5-Day forecast</div> -->
+            <!-- <div class="col days day1">
+              <p><span class="date"></span></p>
+              <p><span class="icon"></span></p>
+              <p>Temp: <span class="temp"></span></p>
+              <p>Wind: <span class="wind"></span></p>
+              <p>Humidity: <span class="humidity"></span></p>
+            </div> -->
+            <ul class="col days" id="day1">
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
+            <ul class="col days" id="day2">
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
+            <ul class="col days" id="day3">
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
+            <ul class="col days" id="day4">
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
+            <ul class="col days" id="day5">
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+              <li></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- <header class="container-fluid">
+      <div class="row">
+        <div class="col-12">
+          <h1>Weather Dashboard</h1>
+        </div>
+      </div>
+    </header>
+    <main class="container">
+      <div class="row">
+        <div class="col-6">
+          <form>
+            <div class="form-group">
+              <label for="inputCity"><h3>Search for a City:</h3></label>
+              <input type="email" class="form-control" id="inputCity" aria-describedby="emailHelp" placeholder="San Diego">
+            </div>
+            <button type="submit" class="btn btn-primary btn-block">Search</button>
+          </form>
+          <div class="dropdown-divider"></div>
+          <div class=historyBtns"></div>
+        </div>
+        <div class="col-6">
+          <article class="day">
+            <h3 id="city"></h3>
+            <p>Temp: <span class="temp"></span></p>
+            <p>Wind: <span class="wind"></span></p>
+            <p>Humidity: <span class="humidity"></span></p>
+            <p>UV Index: <span class="uvi"></span></p>
+          </article>
+          <article class="fiveDay">
+            <div></div>
+          </article>
+        </div>
+        <div class="col-6"></div>
+        <div class="col-6"></div>
+      </div>
+    </main> -->
+    
+  </body>
+
+  <!-- Added link to the jQuery library -->
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+
+  <!-- Only import SLIM if you are not loading jQuery independently -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.slim.min.js"></script> -->
+
+  <!-- import POPPER for pop ups and BOOTSTRAP for bs.js -->
+  <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.1/umd/popper.min.js"></script> -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+
+  <!-- Import Javasctipt file 'script.js' -->
+  <script src="./js/script.js"></script>
+
+</html>
