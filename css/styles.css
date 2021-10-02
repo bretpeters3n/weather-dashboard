@@ -62,3 +62,8 @@ section {
 ul {
   list-style-type: none;
 }
+#city,
+.date,
+h3 {
+  font-weight: bold;
+}

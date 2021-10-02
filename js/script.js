@@ -71,7 +71,7 @@ function searchCity(city) {
   var requestUrl =
     "http://api.openweathermap.org/data/2.5/weather?q=" +
     city +
-    "&appid=" +
+    "&units=imperial&appid=" +
     apiKey;
 
   // functions
@@ -90,6 +90,10 @@ function searchCity(city) {
       var humidity = data.main.humidity;
       console.log(icon);
 
+      temp = temp + "°F";
+      wind = wind + "MPH";
+      humidity = humidity + " %";
+
       date = moment.unix(date).format("MM/DD/YYYY");
 
       var lat = data.coord.lat;
@@ -101,7 +105,7 @@ function searchCity(city) {
       console.log(img);
       // transfer these value to selector to display them on the page
 
-      displayCity.text(timezone + " " + date + " ");
+      displayCity.text(timezone + " (" + date + ") ");
       document.getElementById("city").appendChild(img);
       displayTemp.text(temp);
       displayWind.text(wind);
@@ -135,7 +139,7 @@ function searchCity2(lat, lon, city) {
     part +
     "&cnt=" +
     days +
-    "&appid=" +
+    "&units=imperial&appid=" +
     apiKey;
 
   // functions
@@ -156,11 +160,21 @@ function searchCity2(lat, lon, city) {
         .children("ul")
         .each(function (ul) {
           transferDate = data.daily[ul].dt;
-          transferIcon = " ";
+          transferIcon = data.daily[ul].weather[0].icon;
           transferTemp = data.daily[ul].temp.day;
           transferWind = data.daily[ul].wind_speed;
           transferHumidity = data.daily[ul].humidity;
           transferDate = moment.unix(transferDate).format("MM/DD/YYYY");
+
+          transferTemp = transferTemp + " °F";
+          transferWind = transferWind + " MPH";
+          transferHumidity = transferHumidity + " %";
+
+          var img = document.createElement("img");
+          img.src = "https://openweathermap.org/img/w/" + transferIcon + ".png";
+
+          transferIcon = img;
+
           transferDailyData = [
             transferDate,
             transferIcon,
@@ -174,8 +188,13 @@ function searchCity2(lat, lon, city) {
           $("li", this).each(function (li) {
             //this is li
             //that is parent ul
-            $(this).text(transferDailyData[li]);
-            console.log(li);
+            if (li === 1) {
+              console.log(transferIcon);
+              $(this).html(transferDailyData[li]);
+            } else {
+              $(this).text(transferDailyData[li]);
+              console.log(li);
+            }
           });
         });
 
