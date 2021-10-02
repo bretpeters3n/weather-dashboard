@@ -26,6 +26,7 @@ var displayDay2Hum = $(".day2").find(".humidity");
 var fiveDayForecast = $("#fiveDayForecast");
 console.log(fiveDayForecast);
 
+// global variables
 var transferDate;
 var transferIcon;
 var transferTemp;
@@ -34,11 +35,8 @@ var transferHumidity;
 
 var transferDailyData;
 
-// var day1 = $(".day1");
+var nowMoment = moment().format("HH"); // this var is
 
-// var city = "Minneapolis";
-
-// global variables
 var lat = 44.9;
 var lon = -93.2;
 var excludedParts = "";
@@ -66,6 +64,7 @@ var apiKey = "9f11506654cc7375129f7213e0f21116";
 //   excludedParts +
 //   "&appid=" +
 //   apiKey;
+
 function searchCity(city) {
   console.log("you are searching for " + city);
 
@@ -84,15 +83,26 @@ function searchCity(city) {
       console.log(data);
       // create variables for info I need to display on page. City, temp, wind, humidity, uvi
       var timezone = data.name;
+      var date = data.dt;
+      var icon = data.weather[0].icon;
       var temp = data.main.temp;
       var wind = data.wind.speed;
       var humidity = data.main.humidity;
+      console.log(icon);
+
+      date = moment.unix(date).format("MM/DD/YYYY");
 
       var lat = data.coord.lat;
       var lon = data.coord.lon;
       // var uvi = data.current.uvi;
+
+      var img = document.createElement("img");
+      img.src = "https://openweathermap.org/img/w/" + icon + ".png";
+      console.log(img);
       // transfer these value to selector to display them on the page
-      displayCity.text(timezone);
+
+      displayCity.text(timezone + " " + date + " ");
+      document.getElementById("city").appendChild(img);
       displayTemp.text(temp);
       displayWind.text(wind);
       displayHum.text(humidity);
@@ -145,11 +155,12 @@ function searchCity2(lat, lon, city) {
       $(fiveDayForecast)
         .children("ul")
         .each(function (ul) {
-          transferDate = " ";
+          transferDate = data.daily[ul].dt;
           transferIcon = " ";
           transferTemp = data.daily[ul].temp.day;
           transferWind = data.daily[ul].wind_speed;
           transferHumidity = data.daily[ul].humidity;
+          transferDate = moment.unix(transferDate).format("MM/DD/YYYY");
           transferDailyData = [
             transferDate,
             transferIcon,
