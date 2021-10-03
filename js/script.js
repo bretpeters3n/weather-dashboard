@@ -69,7 +69,7 @@ function searchCity(city) {
   console.log("you are searching for " + city);
 
   var requestUrl =
-    "http://api.openweathermap.org/data/2.5/weather?q=" +
+    "https://api.openweathermap.org/data/2.5/weather?q=" +
     city +
     "&units=imperial&appid=" +
     apiKey;
@@ -166,9 +166,9 @@ function searchCity2(lat, lon, city) {
           transferHumidity = data.daily[ul].humidity;
           transferDate = moment.unix(transferDate).format("MM/DD/YYYY");
 
-          transferTemp = transferTemp + " °F";
-          transferWind = transferWind + " MPH";
-          transferHumidity = transferHumidity + " %";
+          transferTemp = "Temp: " + transferTemp + "°F";
+          transferWind = "Wind: " + transferWind + " MPH";
+          transferHumidity = "Humidity: " + transferHumidity + " %";
 
           var img = document.createElement("img");
           img.src = "https://openweathermap.org/img/w/" + transferIcon + ".png";

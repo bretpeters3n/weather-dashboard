@@ -62,8 +62,18 @@ section {
 ul {
   list-style-type: none;
 }
+li {
+  font-size: smaller;
+}
 #city,
 .date,
 h3 {
   font-weight: bold;
+}
+.uvi {
+  color: var(--white);
+  padding: 8px;
+  font-size: x-small;
+  border-radius: 4px;
+  background-color: var(--uvi);
 }
