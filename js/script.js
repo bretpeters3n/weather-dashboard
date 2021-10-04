@@ -9,6 +9,13 @@
 // PSUEDO CODING - end //
 
 // selectors
+var search = $("#search");
+var cityArray = [];
+var lat;
+var lon;
+var city;
+// var cityArray;
+
 var displayCity = $("#city");
 var displayTemp = $(".temp");
 var displayWind = $(".wind");
@@ -24,7 +31,6 @@ var displayDay2Wind = $(".day2").find(".wind");
 var displayDay2Hum = $(".day2").find(".humidity");
 
 var fiveDayForecast = $("#fiveDayForecast");
-console.log(fiveDayForecast);
 
 // global variables
 var transferDate;
@@ -37,45 +43,47 @@ var transferDailyData;
 
 var nowMoment = moment().format("HH"); // this var is
 
-var lat = 44.9;
-var lon = -93.2;
+// var lat = 44.9;
+// var lon = -93.2;
 var excludedParts = "";
 var apiKey = "9f11506654cc7375129f7213e0f21116";
-// var cityName = "Minneapolis";
 
-// var requestUrl =
-//   "https://api.openweathermap.org/data/2.5/onecall?lat=" +
-//   lat +
-//   "&lon=" +
-//   lon +
-//   "&exclude=" +
-//   excludedParts +
-//   "&appid=" +
-//   apiKey;
+//functions
+function updateStorage() {
+  localStorage.setItem("cityArray", JSON.stringify(cityArray));
+}
 
-// api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
+function updateSearchHistoryButtons() {
+  console.log("updateSearchHistoryButtons() entered");
+  $("#search .searchCity").remove();
 
-// var requestUrl =
-//   "https://api.openweathermap.org/data/2.5/onecall?lat=" +
-//   lat +
-//   "&lon=" +
-//   lon +
-//   "&exclude=" +
-//   excludedParts +
-//   "&appid=" +
-//   apiKey;
+  $.each(cityArray, function (index, value) {
+    var historyBtn = document.createElement("button");
+    historyBtn.setAttribute("type", "button");
+    historyBtn.setAttribute("class", "history-btn searchCity btn btn-block");
+    // historyBtn.setAttribute("class", "btn btn-block");
+    // historyBtn.addClass("test");
+    // historyBtn.addClass("history-btn");
+    historyBtn.append(value);
+    search.append(historyBtn);
+  });
+  $("#search .searchCity").on("click", function (event) {
+    event.preventDefault();
+    // $(this).addClass("history-btn");
+    city = $(this).text();
+    searchCity(city);
+  });
+}
 
 function searchCity(city) {
-  console.log("you are searching for " + city);
-
-  var requestUrl =
+  var requestUrl1 =
     "https://api.openweathermap.org/data/2.5/weather?q=" +
     city +
     "&units=imperial&appid=" +
     apiKey;
 
   // functions
-  fetch(requestUrl)
+  fetch(requestUrl1)
     .then(function (response) {
       return response.json();
     })
@@ -88,7 +96,6 @@ function searchCity(city) {
       var temp = data.main.temp;
       var wind = data.wind.speed;
       var humidity = data.main.humidity;
-      console.log(icon);
 
       temp = temp + "°F";
       wind = wind + "MPH";
@@ -96,13 +103,14 @@ function searchCity(city) {
 
       date = moment.unix(date).format("MM/DD/YYYY");
 
-      var lat = data.coord.lat;
-      var lon = data.coord.lon;
+      lat = data.coord.lat;
+      lon = data.coord.lon;
+      console.log(lat + " " + lon);
+      console.log(typeof lat + " " + typeof lon);
       // var uvi = data.current.uvi;
 
       var img = document.createElement("img");
       img.src = "https://openweathermap.org/img/w/" + icon + ".png";
-      console.log(img);
       // transfer these value to selector to display them on the page
 
       displayCity.text(timezone + " (" + date + ") ");
@@ -111,26 +119,25 @@ function searchCity(city) {
       displayWind.text(wind);
       displayHum.text(humidity);
       //   displayUVI.text("cannot find in API!");
-
-      console.log("timezone = " + timezone);
-      console.log("temp = " + temp);
-      console.log("wind = " + wind);
-      console.log("humidity = " + humidity);
+      searchCity2(city);
+      saveCity(city);
+      //update buttons for re-searching
+      updateSearchHistoryButtons();
     })
     .catch(function (error) {
       alert("City not found. Try again.");
     });
 
-  searchCity2(lat, lon, city);
+  // searchCity2(city);
+  // saveCity(city);
 }
 
-function searchCity2(lat, lon, city) {
-  console.log("you are searching for " + city);
-
+function searchCity2(city) {
+  console.log(city + " " + lat + " " + lon);
   var part = "";
   var days = 5;
 
-  var requestUrl =
+  var requestUrl2 =
     "https://api.openweathermap.org/data/2.5/onecall?lat=" +
     lat +
     "&lon=" +
@@ -143,7 +150,7 @@ function searchCity2(lat, lon, city) {
     apiKey;
 
   // functions
-  fetch(requestUrl)
+  fetch(requestUrl2)
     .then(function (response) {
       return response.json();
     })
@@ -153,8 +160,6 @@ function searchCity2(lat, lon, city) {
       var uvi = data.current.uvi;
       // transfer these value to selector to display them on the page
       displayUVI.text(uvi);
-
-      console.log("uvi = " + uvi);
 
       $(fiveDayForecast)
         .children("ul")
@@ -189,11 +194,9 @@ function searchCity2(lat, lon, city) {
             //this is li
             //that is parent ul
             if (li === 1) {
-              console.log(transferIcon);
               $(this).html(transferDailyData[li]);
             } else {
               $(this).text(transferDailyData[li]);
-              console.log(li);
             }
           });
         });
@@ -218,16 +221,38 @@ function searchCity2(lat, lon, city) {
     });
 }
 
+function saveCity(city) {
+  //add city (successfully pulled from API) to array
+  //check to see if city is in array beofre adding it to the array
+  if (jQuery.inArray(city, cityArray) != -1) {
+  } else {
+    // cityArray = [];
+    cityArray.push(city);
+    updateStorage();
+  }
+}
+
 function init() {
   // default city
-  var city = "Minneapolis";
+  city = "Minneapolis";
 
+  //take page history, if it exists, and display it. if not create a default city to start with "Minneapolis".
+  if (localStorage.getItem("cityArray") !== null) {
+    //if this variable is in storage, get it
+    cityArray = JSON.parse(localStorage.getItem("cityArray"));
+  } else {
+    //if this var is not in storage, add the default city to the array, and updateStorage.
+    cityArray.push(city);
+    updateStorage();
+  }
+
+  //initiate function that builds first search to page on page load
   searchCity(city);
 
+  //created button to take search term and run through function
   $("#searchCity").click(function (e) {
     e.preventDefault();
-    var city = $("#search").find('input[id="inputCity"]').val();
-    console.log(city);
+    city = $("#search").find('input[id="inputCity"]').val();
     searchCity(city);
   });
 }
