@@ -12,11 +12,6 @@
 [![LinkedIn][linkedin-shield]][linkedin-url]
 -->
 
-<img src="https://img.shields.io/badge/HTML-orange"/>
-<img src="https://img.shields.io/badge/CSS-yellow"/>
-<img src="https://img.shields.io/badge/Javascript-green"/>
-
-
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
@@ -27,6 +22,11 @@
   -->
 
 <h2 align="center">Weather Dashboard</h2>
+  <p align="center">
+    <img src="https://img.shields.io/badge/HTML-orange"/>
+    <img src="https://img.shields.io/badge/CSS-yellow"/>
+    <img src="https://img.shields.io/badge/Javascript-green"/>
+  </p>
   <p align="center">
     This project included making a weather dashboard that displays portions of the current weather of a location. 
     <br />
